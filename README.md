@@ -7,10 +7,10 @@
 ## 系統截圖
 
 ### 戰情儀表板 — 即時 KPI 監控與預測趨勢
-![戰情儀表板](screenshots/第一張（戰情儀表板、折線圖.PNG)
+![戰情儀表板](screenshots/dashboard.png)
 
 ### AI 維運助理 — 自動根因分析與派工報告
-![AI 維運助理](screenshots/第二張（告警區 + AI 診斷報告.PNG)
+![AI 維運助理](screenshots/ai_report.png)
 
 ---
 
