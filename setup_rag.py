@@ -1,3 +1,9 @@
+# --- 雲端 SQLite 版本過舊的修正補丁 ---
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+# -------------------------------------
+
 import chromadb
 from sentence_transformers import SentenceTransformer
 from chromadb.api.types import EmbeddingFunction, Documents, Embeddings
