@@ -1,0 +1,32 @@
+﻿Timestamp,PRB_Utilization,RRC_Setup_Success_Rate,Handover_Failure_Rate,System_Log
+2023-12-31 23:45:00,49.1,97.8,0.93,System Normal
+2023-12-31 23:46:00,47.2,98.63,1.9,System Normal
+2023-12-31 23:47:00,52.8,99.24,1.16,System Normal
+2023-12-31 23:48:00,54.0,98.27,0.91,System Normal
+2023-12-31 23:49:00,52.3,98.74,1.67,System Normal
+2023-12-31 23:50:00,57.6,98.87,1.29,System Normal
+2023-12-31 23:51:00,47.6,98.16,1.08,System Normal
+2023-12-31 23:52:00,50.2,96.74,1.05,System Normal
+2023-12-31 23:53:00,49.4,97.24,1.46,System Normal
+2023-12-31 23:54:00,52.7,97.07,0.72,System Normal
+2023-12-31 23:55:00,59.8,96.93,1.83,System Normal
+2023-12-31 23:56:00,58.3,90.84,4.51,High Interference
+2023-12-31 23:57:00,70.4,81.74,7.42,System Normal
+2023-12-31 23:58:00,75.0,74.44,10.89,Throughput Degradation Warning
+2023-12-31 23:59:00,75.5,66.34,15.15,High Interference
+2024-01-01 00:00:00,92.2,57.57,18.27,High Interference
+2024-01-01 00:01:00,84.2,57.69,18.67,Radio Link Failure
+2024-01-01 00:02:00,84.2,58.39,18.76,Radio Link Failure
+2024-01-01 00:03:00,99.9,56.59,17.69,Radio Link Failure
+2024-01-01 00:04:00,99.9,57.62,18.39,Cell Congestion Alarm
+2024-01-01 00:05:00,94.3,58.77,16.95,High Interference
+2024-01-01 00:06:00,81.3,63.4,16.37,Cell Congestion Alarm
+2024-01-01 00:07:00,77.9,65.65,15.77,Cell Congestion Alarm
+2024-01-01 00:08:00,86.3,70.34,13.81,High Interference
+2024-01-01 00:09:00,75.3,73.77,11.63,Cell Congestion Alarm
+2024-01-01 00:10:00,63.3,81.48,8.82,Overload Control Activated
+2024-01-01 00:11:00,68.9,80.95,8.6,Overload Control Activated
+2024-01-01 00:12:00,55.4,83.81,8.18,High Interference
+2024-01-01 00:13:00,70.9,92.25,4.64,System Normal
+2024-01-01 00:14:00,55.3,95.86,1.8,System Normal
+2024-01-01 00:15:00,58.1,99.01,1.22,System Normal

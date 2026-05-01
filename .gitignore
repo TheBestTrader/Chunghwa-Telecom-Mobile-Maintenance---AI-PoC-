@@ -1,0 +1,15 @@
+# 環境變數（含 API 金鑰，絕對不可上傳）
+.env
+
+# Python 快取與暫存
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# ChromaDB 本地持久化資料
+chroma_db/
+
+# 作業系統隱藏檔
+.DS_Store
+Thumbs.db
