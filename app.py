@@ -68,9 +68,6 @@ st.set_page_config(
 st.title("中華電信行動維運 - 跨年告警與自動派工 AI 系統 (PoC)")
 st.caption("信義區跨年晚會 | 2023-12-31 23:45 ~ 2024-01-01 00:15")
 
-# --- 讀取 API Key ---
-api_key = os.environ.get("GEMINI_API_KEY", "")
-
 
 @st.cache_data
 def load_data():
@@ -112,6 +109,29 @@ with st.sidebar:
     st.metric("PRB 利用率", f"{current_row['PRB_Utilization']:.1f}%")
     st.metric("RRC 建立成功率", f"{current_row['RRC_Setup_Success_Rate']:.2f}%")
     st.metric("換手失敗率", f"{current_row['Handover_Failure_Rate']:.2f}%")
+
+    st.markdown("---")
+    with st.expander("⚙️ 系統進階設定", expanded=False):
+        api_key_source = st.radio(
+            "🔑 API Key 來源",
+            ["系統預設 (.env)", "自訂輸入 (BYOK)"],
+        )
+        byok_key = ""
+        if api_key_source == "自訂輸入 (BYOK)":
+            byok_key = st.text_input("請輸入您的 Gemini API Key", type="password")
+        selected_model = st.selectbox(
+            "🧠 AI 模型",
+            ["gemini-2.5-flash", "gemini-2.5-flash-lite"],
+        )
+
+# --- 動態 API Key 解析 ---
+_env_api_key = os.environ.get("GEMINI_API_KEY", "")
+if not _env_api_key:
+    try:
+        _env_api_key = st.secrets.get("GEMINI_API_KEY", "")
+    except Exception:
+        pass
+active_api_key = byok_key if api_key_source == "自訂輸入 (BYOK)" else _env_api_key
 
 # 篩選歷史數據
 df_history = df[df["Timestamp"] <= selected_ts].copy()
@@ -294,12 +314,17 @@ with col_ai:
 
     if st.button("啟動 AI 智能診斷", type="primary", use_container_width=True):
 
-        if not api_key:
-            st.error(
-                "未偵測到 GEMINI_API_KEY。\n\n"
-                "請在 .env 檔案中設定：\n"
-                "`GEMINI_API_KEY=AIzaSy...`"
-            )
+        if not active_api_key:
+            if api_key_source == "自訂輸入 (BYOK)":
+                st.error("請在上方「系統進階設定」中輸入您的 Gemini API Key。")
+            else:
+                st.error(
+                    "未偵測到 GEMINI_API_KEY。\n\n"
+                    "請在 .env 檔案中設定：\n"
+                    "`GEMINI_API_KEY=AIzaSy...`\n\n"
+                    "或切換至「自訂輸入 (BYOK)」模式手動輸入。"
+                )
+            st.stop()
         else:
             try:
                 status = st.status("AI 助理正在進行診斷與規劃...", expanded=True)
@@ -349,7 +374,7 @@ with col_ai:
                 )
 
                 # [步驟 D] Agentic Function Calling 迴圈
-                client = genai.Client(api_key=api_key)
+                client = genai.Client(api_key=active_api_key)
                 config = genai_types.GenerateContentConfig(
                     system_instruction=system_instruction,
                     tools=[check_inventory, check_engineer_schedule],
@@ -369,7 +394,7 @@ with col_ai:
                 for _iter in range(5):
                     try:
                         response = client.models.generate_content(
-                            model="gemini-2.5-flash",
+                            model=selected_model,
                             contents=conversation,
                             config=config,
                         )
@@ -450,7 +475,7 @@ with col_ai:
                                     border-radius:8px;padding:4px 16px 4px 16px;
                                     margin-top:8px;">
                             <p style="color:#60A5FA;font-size:11px;margin:8px 0 4px 0;">
-                                RAG 命中：{sop_id} ｜ 模型：gemini-2.5-flash ｜ 時間點：{display_time}
+                                RAG 命中：{sop_id} ｜ 模型：{selected_model} ｜ 時間點：{display_time}
                             </p>
                         </div>""",
                         unsafe_allow_html=True,
