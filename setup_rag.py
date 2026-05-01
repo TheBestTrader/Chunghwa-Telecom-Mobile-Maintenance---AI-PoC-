@@ -75,12 +75,18 @@ def build_vector_db() -> chromadb.Collection:
 def get_relevant_sop(query_text: str, n_results: int = 1) -> list[dict]:
     """
     對 ChromaDB 進行語意相似度搜尋，回傳最相關的 SOP。
+    若 collection 尚未建立（例如雲端首次啟動），自動執行初始化。
 
     Returns:
         List of dict，每筆包含 'id', 'document', 'distance'
     """
     client = chromadb.PersistentClient(path=DB_PATH)
     embed_fn = LocalEmbeddingFunction()
+
+    existing = [c.name for c in client.list_collections()]
+    if COLLECTION_NAME not in existing:
+        build_vector_db()
+
     collection = client.get_collection(
         name=COLLECTION_NAME,
         embedding_function=embed_fn,
